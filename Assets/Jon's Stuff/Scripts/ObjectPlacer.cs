@@ -8,6 +8,9 @@ public class ObjectPlacer : MonoBehaviour
     [SerializeField]
     GameObject fencePrefab;
 
+    [SerializeField]
+    GameObject fencePrefabPreview;
+
     #endregion Instantiatables
 
     #region PlacementVariables
@@ -17,7 +20,18 @@ public class ObjectPlacer : MonoBehaviour
 
     private Vector3 currentPlacementRotation = new Vector3(0, 0, 0);
 
+    private bool snapPointsSatisfied = false;
     #endregion PlacementVariables
+
+    #region Materials
+
+    [SerializeField]
+    Material placementBad;
+
+    [SerializeField]
+    Material placementGood;
+
+    #endregion Materials
 
     private GameObject player;
 
@@ -61,16 +75,40 @@ public class ObjectPlacer : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            FinalizePlacement();
+            if (placementMode && snapPointsSatisfied)
+            {
+                FinalizePlacement();
+            }
         }
 
         if (placementMode)
         {
             if (currentPlacement == null)
             {
-                currentPlacement = Instantiate(fencePrefab);
+                currentPlacement = Instantiate(fencePrefabPreview);
             }
-            currentPlacement.transform.position =  player.transform.position + (player.transform.forward * 5);
+
+            Vector3 placementPos = player.transform.position + (player.transform.forward * 5);
+            StructureSnapPoint[] snapPoints = currentPlacement.GetComponentsInChildren<StructureSnapPoint>();
+
+            Vector3 offset;
+            offset = snapPoints[0].SnapPointOffset();
+            if (offset == Vector3.zero)
+            {
+                snapPoints[1].SnapPointOffset();
+            }
+
+            snapPointsSatisfied = true; // snapPoints[0].Satisfied() && snapPoints[1].Satisfied();
+
+            if  (snapPointsSatisfied)
+            {
+                currentPlacement.GetComponent<Renderer>().material = placementGood;
+            }
+            else
+            {
+                currentPlacement.GetComponent<Renderer>().material = placementBad;
+            }
+            currentPlacement.transform.position = placementPos + offset/1.2f;
             currentPlacement.transform.LookAt(player.transform);
             currentPlacement.transform.rotation = Quaternion.Euler(currentPlacement.transform.rotation.eulerAngles + currentPlacementRotation);
         }
@@ -79,8 +117,7 @@ public class ObjectPlacer : MonoBehaviour
         {
             if (currentPlacement != null)
             {
-                Destroy(currentPlacement);
-                currentPlacement = null;
+                DestroyCurrentPlacement();
             }
         }
     }
@@ -97,8 +134,20 @@ public class ObjectPlacer : MonoBehaviour
 
     public void FinalizePlacement()
     {
-        currentPlacement = null;
+        GameObject finalized = Instantiate(fencePrefab);
+        finalized.transform.position = currentPlacement.transform.position;
+        finalized.transform.rotation = currentPlacement.transform.rotation;
         TogglePlacementMode();
+    }
+
+    private void DestroyCurrentPlacement()
+    {
+        foreach (StructureSnapPoint curr in currentPlacement.GetComponentsInChildren<StructureSnapPoint>())
+        {
+            curr.Delete();
+        }
+        Destroy(currentPlacement);
+        currentPlacement = null;
     }
 
 }
