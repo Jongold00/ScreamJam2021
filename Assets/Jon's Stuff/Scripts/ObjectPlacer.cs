@@ -14,7 +14,7 @@ public class ObjectPlacer : MonoBehaviour
     #endregion Instantiatables
 
     #region PlacementVariables
-    private bool placementMode = false;
+    public bool placementMode = false;
 
     private GameObject currentPlacement;
 
@@ -85,7 +85,7 @@ public class ObjectPlacer : MonoBehaviour
         {
             if (currentPlacement == null)
             {
-                currentPlacement = Instantiate(fencePrefabPreview);
+                currentPlacement = Instantiate(fencePrefabPreview.transform.GetChild(0).gameObject);
             }
 
             Vector3 placementPos = player.transform.position + (player.transform.forward * 5);
