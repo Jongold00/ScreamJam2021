@@ -212,7 +212,7 @@ Transform:
   m_GameObject: {fileID: 2917345334046271119}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.54, y: 0, z: -7.95}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 2917345334046702227}
   - {fileID: 2917345334046702229}
@@ -258,6 +258,7 @@ MonoBehaviour:
   anim: {fileID: 2917345334036911377}
   stoppingDistance: 3
   attackRate: 1
+  sheepAttackable: 1
 --- !u!195 &2647794815541937561
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -268,15 +269,15 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 9
+  m_Speed: 7
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 150
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 1
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
