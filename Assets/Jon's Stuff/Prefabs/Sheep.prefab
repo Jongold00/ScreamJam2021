@@ -119,7 +119,7 @@ MonoBehaviour:
   grownWool: {fileID: 2100000, guid: 9074875ce49c67b4cb7f7b81bf603908, type: 2}
   cutWool: {fileID: 2100000, guid: 6e0dd14ceba796d419270dccbb3d0e15, type: 2}
   totalRegrowTime: 15
-  sellValue: 10
+  sellValue: 50
 --- !u!65 &8608233192849670151
 BoxCollider:
   m_ObjectHideFlags: 0

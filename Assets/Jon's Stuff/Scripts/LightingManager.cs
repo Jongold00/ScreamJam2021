@@ -4,6 +4,8 @@ using UnityEngine;
 public class LightingManager : MonoBehaviour
 {
     //Scene References
+
+    [SerializeField, Range(1, 10)] private float DayLength;
     [SerializeField] private Light DirectionalLight;
     [SerializeField] private LightingPreset Preset;
     //Variables
@@ -18,7 +20,7 @@ public class LightingManager : MonoBehaviour
         if (Application.isPlaying)
         {
             //(Replace with a reference to the game time)
-            TimeOfDay += Time.deltaTime;
+            TimeOfDay += Time.deltaTime / DayLength;
             TimeOfDay %= 24; //Modulus to ensure always between 0-24
             UpdateLighting(TimeOfDay / 24f);
         }
