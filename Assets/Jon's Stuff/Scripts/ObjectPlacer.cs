@@ -5,6 +5,9 @@ using UnityEngine;
 public class ObjectPlacer : MonoBehaviour
 {
     #region Instantiatables
+    [SerializeField] private List<PlaceableObjecSO> placedObjectTypeSO = null;
+    private PlaceableObjecSO placeableObjecSO;
+
     [SerializeField]
     GameObject fencePrefab;
 
@@ -55,6 +58,7 @@ public class ObjectPlacer : MonoBehaviour
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        placeableObjecSO = placedObjectTypeSO[0];
         DontDestroyOnLoad(gameObject);
     }
 
@@ -85,7 +89,7 @@ public class ObjectPlacer : MonoBehaviour
         {
             if (currentPlacement == null)
             {
-                currentPlacement = Instantiate(fencePrefabPreview.transform.GetChild(0).gameObject);
+                currentPlacement = Instantiate(placeableObjecSO.prefabsPreview.transform.GetChild(0).gameObject);
             }
 
             Vector3 placementPos = player.transform.position + (player.transform.forward * 5);
@@ -100,7 +104,7 @@ public class ObjectPlacer : MonoBehaviour
 
             snapPointsSatisfied = true; // snapPoints[0].Satisfied() && snapPoints[1].Satisfied();
 
-            if  (snapPointsSatisfied)
+            if (snapPointsSatisfied)
             {
                 currentPlacement.GetComponent<Renderer>().material = placementGood;
             }
@@ -108,7 +112,7 @@ public class ObjectPlacer : MonoBehaviour
             {
                 currentPlacement.GetComponent<Renderer>().material = placementBad;
             }
-            currentPlacement.transform.position = placementPos + offset/1.2f;
+            currentPlacement.transform.position = placementPos + offset / 1.2f;
             currentPlacement.transform.LookAt(player.transform);
             currentPlacement.transform.rotation = Quaternion.Euler(currentPlacement.transform.rotation.eulerAngles + currentPlacementRotation);
         }
@@ -134,10 +138,15 @@ public class ObjectPlacer : MonoBehaviour
 
     public void FinalizePlacement()
     {
-        GameObject finalized = Instantiate(fencePrefab);
+        GameObject finalized = Instantiate(placeableObjecSO.prefabs);
         finalized.transform.position = currentPlacement.transform.position;
         finalized.transform.rotation = currentPlacement.transform.rotation;
         TogglePlacementMode();
+    }
+
+    public void ChooseBarricade(int value)
+    {
+        placeableObjecSO = placedObjectTypeSO[value];
     }
 
     private void DestroyCurrentPlacement()
