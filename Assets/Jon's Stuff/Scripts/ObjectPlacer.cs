@@ -94,7 +94,7 @@ public class ObjectPlacer : MonoBehaviour
 
             Vector3 placementPos = player.transform.position + (player.transform.forward * 5);
             StructureSnapPoint[] snapPoints = currentPlacement.GetComponentsInChildren<StructureSnapPoint>();
-
+            /*
             Vector3 offset;
             offset = snapPoints[0].SnapPointOffset();
             if (offset == Vector3.zero)
@@ -102,17 +102,19 @@ public class ObjectPlacer : MonoBehaviour
                 snapPoints[1].SnapPointOffset();
             }
 
-            snapPointsSatisfied = true; // snapPoints[0].Satisfied() && snapPoints[1].Satisfied();
+             // snapPoints[0].Satisfied() && snapPoints[1].Satisfied();
+            */
 
+            snapPointsSatisfied = true;
             if (snapPointsSatisfied)
             {
-                currentPlacement.GetComponent<Renderer>().material = placementGood;
+                currentPlacement.GetComponentInChildren<Renderer>().material = placementGood;
             }
             else
             {
-                currentPlacement.GetComponent<Renderer>().material = placementBad;
+                currentPlacement.GetComponentInChildren<Renderer>().material = placementBad;
             }
-            currentPlacement.transform.position = placementPos + offset / 1.2f;
+            currentPlacement.transform.position = placementPos;
             currentPlacement.transform.LookAt(player.transform);
             currentPlacement.transform.rotation = Quaternion.Euler(currentPlacement.transform.rotation.eulerAngles + currentPlacementRotation);
         }

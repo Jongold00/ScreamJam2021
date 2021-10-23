@@ -21,5 +21,11 @@ public class HotkeyAbilitySystem : MonoBehaviour
             ObjectPlacer.Instance.ChooseBarricade(2);
             ItemSelector.instance.ChangeOverlay(2);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            ObjectPlacer.Instance.ChooseBarricade(3);
+            ItemSelector.instance.ChangeOverlay(3);
+
+        }
     }
 }

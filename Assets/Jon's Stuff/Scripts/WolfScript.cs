@@ -79,7 +79,6 @@ public class WolfScript : MonoBehaviour
             nav.SetDestination(targetWall.transform.position);
             target = targetWall.transform;
         }
-        print(target.name);
         
 
 
