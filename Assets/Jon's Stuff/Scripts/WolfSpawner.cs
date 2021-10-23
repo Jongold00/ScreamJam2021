@@ -11,15 +11,36 @@ public class WolfSpawner : MonoBehaviour
 
     float spawnTimer;
 
+    bool isNighttime;
 
+    LightingManager dayCycle;
+
+    public void Start()
+    {
+        dayCycle = FindObjectOfType<LightingManager>();
+    }
     public void Update()
     {
-        if (spawnTimer <= 0)
+        if (dayCycle.TimeOfDay > 18 || dayCycle.TimeOfDay < 6)
         {
-            spawnTimer = SpawnInterval;
-            SpawnWolf(ChooseSpawnLocation());
+            isNighttime = true;
         }
-        spawnTimer -= Time.deltaTime;
+        else
+        {
+            isNighttime = false;
+        }
+
+        if (isNighttime)
+        {
+            if (spawnTimer <= 0)
+            {
+                spawnTimer = SpawnInterval;
+                SpawnWolf(ChooseSpawnLocation());
+            }
+            spawnTimer -= Time.deltaTime;
+        }
+
+
     }
 
     Vector3 ChooseSpawnLocation()
