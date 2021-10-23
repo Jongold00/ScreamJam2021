@@ -10,6 +10,11 @@ public class PauseMenuUI : MonoBehaviour
     static PauseMenuUI instance;
 
     [SerializeField]
+    GameObject pauseMenu;
+
+    bool paused = false;
+
+    [SerializeField]
     GameObject[] mainMenuLayers;
 
 
@@ -26,12 +31,42 @@ public class PauseMenuUI : MonoBehaviour
 
     public void Awake()
     {
+         
     }
 
 
     public void Start()
     {
 
+
+
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            OnPauseClicked();
+        }
+    }
+
+    public void OnPauseClicked() 
+    {
+        paused = !paused;
+
+        if (paused)
+        {
+            Time.timeScale = 0;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Time.timeScale = 1;
+            Cursor.lockState = CursorLockMode.Locked;
+
+        }
+
+        pauseMenu.SetActive(!pauseMenu.activeInHierarchy);
     }
 
     public void OnLayerToggle(int layerIndex)
