@@ -425,6 +425,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dayMaterial: {fileID: 2100000, guid: 9aa8ed67591432941bb76f12eb23ff91, type: 2}
   nightMaterial: {fileID: 2100000, guid: ed1387202b1349540a5d6464f0f27488, type: 2}
+  lerpTime: 0.6
 --- !u!1 &2028565211
 GameObject:
   m_ObjectHideFlags: 0
